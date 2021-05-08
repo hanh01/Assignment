@@ -1,18 +1,13 @@
 package com.demo.dao;
-
 import com.demo.entity.ProductEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 public class ProductDao {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence");
-    private static Connection connection;
 
     public List<ProductEntity> getAllProduct() {
         EntityManager em = emf.createEntityManager();
@@ -23,6 +18,16 @@ public class ProductDao {
         return list;
     }
 
+    //this is find product by id for update product by id
+    public ProductEntity getProductById(int _id) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        ProductEntity product = em.createQuery("select c from ProductEntity c where c.id = id", ProductEntity.class).getSingleResult();
+        em.getTransaction().commit();
+        em.close();
+        return product;
+    }
+
     public void insertProduct(ProductEntity product) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
@@ -30,6 +35,7 @@ public class ProductDao {
         em.getTransaction().commit();
         em.close();
     }
+
 
     public void updateProduct(ProductEntity product) {
         EntityManager em = emf.createEntityManager();
@@ -45,6 +51,7 @@ public class ProductDao {
         em.close();
     }
 
+
     public void deleteProduct(int id) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
@@ -54,7 +61,6 @@ public class ProductDao {
         }
         em.getTransaction().commit();
         em.close();
-
     }
 
 

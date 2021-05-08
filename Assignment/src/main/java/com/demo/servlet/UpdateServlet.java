@@ -32,16 +32,15 @@ public class UpdateServlet extends HttpServlet {
 
     private void updateProduct(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 
-        int id = java.lang.Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         int price = java.lang.Integer.parseInt(request.getParameter("price"));
         int quantity = java.lang.Integer.parseInt(request.getParameter("quantity"));
         String image = request.getParameter("image");
-
-        ProductEntity productEntity = new ProductEntity(id,name,price,quantity,image);
-        dao.updateProduct(productEntity);
+        ProductEntity product = new ProductEntity(id,name,price,quantity,image);
+        dao.updateProduct(product);
         response.sendRedirect("product");
-    }
 
+   }
 
 }
